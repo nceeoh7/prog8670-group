@@ -3,11 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const expressSession = require("express-session");
 const fileUpload = require("express-fileupload");
+const mongoStore = require("connect-mongo");
 const ejs = require("ejs");
 const app = new express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const flash= require("connect-flash")
+const flash = require("connect-flash");
 const validation = require("./middlewares/validation");
 const authMiddleware = require("./middlewares/authMiddleware");
 const redirectAuthenticatedMiddleware = require("./middlewares/redirectAuthenticatedMiddleware");
@@ -31,6 +32,7 @@ app.use(
     secret: "Arbitrary String",
     resave: false,
     saveUninitialized: true,
+    store: mongoStore.create({ mongoUrl: process.env.MONGO_URL }),
   })
 );
 
